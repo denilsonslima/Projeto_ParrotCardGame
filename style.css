@@ -64,6 +64,48 @@ body {
 .virad .back-face {
     transform: rotateY(-180deg);
 }
+.final {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(238, 249, 191, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: none;
+}
+  
+.final div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center ;
+    align-items: center;
+}
+  
+.final h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+  
+.final button {
+    width: 80px;
+    height: 30px;
+    font-size: 20px;
+    color: white;
+}
+
+.vermelha {
+    background-color: red;
+}
+
+.finalClicado {
+    display: flex;
+}
+.click {
+    background-color: green;
+}
 
 @media (max-width: 400px){  
     .titulo {
