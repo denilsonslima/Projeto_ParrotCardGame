@@ -6,6 +6,7 @@ const img = ["./img/0.png", "./img/1.gif",
 "./img/4.gif", "./img/5.gif",
 "./img/6.gif", "./img/7.gif"]
 
+
 let qtdCartas = prompt("ESCOLHA O NÚMERO DE CARTAS:\nMínimo: 4        Máximo: 14        OBS . : Valores Pares");
 
 while (qtdCartas < 4 || qtdCartas > 14 || qtdCartas % 2 !== 0){
@@ -13,20 +14,53 @@ while (qtdCartas < 4 || qtdCartas > 14 || qtdCartas % 2 !== 0){
 }
 
 for(let i = 0; i < qtdCartas; i+=2){
-    cartas = document.querySelector(".main");
-    cartas.innerHTML += `
-    <ul class="card" onclick="clickCarta(this)">
+    cartasUsuario.push(`
+    <ul class="card img${count}" onclick="clickCarta(this)">
         <li class="back-face face"><img src="/img/0.png"></li>
         <li class="front-face face"><img src="${img[count]}"></li>
-    </ul>`
-    cartas.innerHTML += `
-    <ul class="card" onclick="clickCarta(this)">
+    </ul>
+    `)
+    cartasUsuario.push(`
+    <ul class="card img${count}" onclick="clickCarta(this)">
         <li class="back-face face"><img src="/img/0.png"></li>
         <li class="front-face face"><img src="${img[count]}"></li>
-    </ul>`
+    </ul>
+    `)
     count++
 }
 
+cartasUsuario.sort(comparador)
+
+for(let i = 0; i < qtdCartas; i++){
+    cartas = document.querySelector(".main");
+    cartas.innerHTML += cartasUsuario[i]
+}
+
+function comparador() { 
+	return Math.random() - 0.5; 
+}
+
+let carta1, carta2;
 function clickCarta (seletor){
-    seletor.classList.toggle("virada")
+    if(carta1 === undefined){
+        seletor.classList.add("virada")
+        carta1 = seletor;
+    }
+    else if(carta2 === undefined){
+        seletor.classList.add("virada")
+        carta2 = seletor;
+        setTimeout(id, 2000)
+    }
+}
+
+function id (){
+    let cartaA = carta1.classList.value;
+    let cartaB = carta2.classList.value;
+    if (cartaA !== cartaB){
+        carta1.classList.remove("virada")
+        carta2.classList.remove("virada")
+    }
+
+    carta1 = undefined;
+    carta2 = undefined;
 }
