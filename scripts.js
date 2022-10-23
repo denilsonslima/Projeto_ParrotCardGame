@@ -7,10 +7,9 @@ const img = ["./img/0.png", "./img/1.gif",
 "./img/6.gif", "./img/7.gif"]
 
 
-let qtdCartas = prompt("ESCOLHA O NÚMERO DE CARTAS:\nMínimo: 4        Máximo: 14        OBS . : Valores Pares");
-
+let qtdCartas = 0;
 while (qtdCartas < 4 || qtdCartas > 14 || qtdCartas % 2 !== 0){
-    qtdCartas = prompt("INSIRA UM VALOR VÁLIDO:\nMínimo: 4        Máximo: 14        OBS . : Valores Pares");
+    qtdCartas = Number(prompt("INSIRA UM VALOR VÁLIDO:\nMínimo: 4        Máximo: 14        OBS . : Valores Pares"));
 }
 
 for(let i = 0; i < qtdCartas; i+=2){
@@ -41,7 +40,9 @@ function comparador() {
 }
 
 let carta1, carta2;
+let contador = 0;
 function clickCarta (seletor){
+    contador++
     if(carta1 === undefined){
         seletor.classList.add("virada")
         carta1 = seletor;
@@ -49,7 +50,7 @@ function clickCarta (seletor){
     else if(carta2 === undefined){
         seletor.classList.add("virada")
         carta2 = seletor;
-        setTimeout(id, 2000)
+        setTimeout(id, 1000)
     }
 }
 
@@ -59,8 +60,17 @@ function id (){
     if (cartaA !== cartaB){
         carta1.classList.remove("virada")
         carta2.classList.remove("virada")
+    } else {
+        fim()
     }
 
     carta1 = undefined;
     carta2 = undefined;
+}
+
+function fim (){
+    let fim = document.querySelectorAll(".virada")
+    if (fim.length === qtdCartas){
+        alert(`Você ganhou em ${contador} jogadas!  🥳🎉`)
+    }
 }
