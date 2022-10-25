@@ -5,29 +5,37 @@ let cartasUsuario = [];
 let contador = 0;
 let carta1, carta2;
 let qtdCartas = 0;
-const img = ["./img/0.png", "./img/1.gif", 
-"./img/2.gif", "./img/3.gif", 
-"./img/4.gif", "./img/5.gif",
-"./img/6.gif", "./img/7.gif"]
+const img = [ 
+"bobrossparrot.gif",
+"explodyparrot.gif",
+"fiestaparrot.gif",
+"metalparrot.gif",
+"revertitparrot.gif",
+"tripletsparrot.gif",
+"unicornparrot.gif",
+]
+
+img.sort(comparador);
 
 function iniciar (){
     while (qtdCartas < 4 || qtdCartas > 14 || qtdCartas % 2 !== 0){
         qtdCartas = Number(prompt("INSIRA UM VALOR VÁLIDO:\nMínimo: 4        Máximo: 14        OBS . : Valores Pares"));
     }
     
-    for(let i = 0; i < qtdCartas; i+=2){
+    for(let i = 0; i < (qtdCartas/2); i++){
         cartasUsuario.push(`
-        <ul class="card img${count}" onclick="clickCarta(this)">
-            <li class="back-face face"><img src="/img/0.png"></li>
-            <li class="front-face face"><img src="${img[count]}"></li>
+        <ul class="card" onclick="clickCarta(this)">
+            <li class="back-face face"><img src="/img/back.png"></li>
+            <li class="front-face face"><img src="./img/${img[i]}"></li>
         </ul>
         `)
         cartasUsuario.push(`
-        <ul class="card img${count}" onclick="clickCarta(this)">
-            <li class="back-face face"><img src="/img/0.png"></li>
-            <li class="front-face face"><img src="${img[count]}"></li>
+        <ul class="card" onclick="clickCarta(this)">
+            <li class="back-face face"><img src="/img/back.png"></li>
+            <li class="front-face face"><img src="./img/${img[i]}"></li>
         </ul>
         `)
+        
         count++
     }
     
@@ -45,26 +53,26 @@ function comparador() {
 }
 
 function clickCarta (seletor){
-    contador++
-    if(seletor.classList.contains("virada") === true){
-        seletor.classList.remove("virada")
-        carta1 = undefined;
+    if(seletor.classList.contains("virada")){
+        return;
     }
-    else if (carta1 === undefined){
+
+    if (carta1 === undefined || carta2 === undefined){
+        contador++
         seletor.classList.add("virada")
-        carta1 = seletor;
-    } 
-    else if(carta2 === undefined){
-        seletor.classList.add("virada")
-        carta2 = seletor;
-        setTimeout(id, 1000)
-    }   
+        if (carta1 === undefined){
+            carta1 = seletor;
+        } 
+        else if(carta2 === undefined){
+            carta2 = seletor;
+            setTimeout(id, 1000)
+        } 
+    }
+      
 }
 
 function id (){
-    let cartaA = carta1.classList.value;
-    let cartaB = carta2.classList.value;
-    if (cartaA !== cartaB){
+    if (carta1.innerHTML !== carta2.innerHTML){
         carta1.classList.remove("virada")
         carta2.classList.remove("virada")
     } else {
@@ -86,12 +94,9 @@ function fim (){
         }
 
         if (continuar === "sim"){
-            count = 1;
-            contador = 0;
-            qtdCartas = 0;
-            cartas.innerHTML = "";
-            cartasUsuario = [];
-            setTimeout(iniciar, 500)
+            setTimeout(() => {
+                window.location.reload()
+            }, 1000);
         } else {
             const a = document.querySelector(".final")
             a.classList.add("finalClicado")
